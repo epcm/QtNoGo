@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ai/v3.exe</file>
+    </qresource>
+</RCC>
