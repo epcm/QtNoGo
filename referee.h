@@ -26,15 +26,16 @@ public:
     explicit Referee(QObject *parent = nullptr);
 
 signals:
+    void updateSignal();
 public slots:
     // 传数据给人类并获得输出
-    void humanOneStep(Action a);
-
+    //void humanOneStep(Action a);
+    void judge();
 public:
     // 人类玩家时限
     int m_time_limit = 60;
     // 当前盘面
-    vector<vector<int>> m_board(9, vector<int>(9, 0));
+    int m_board[9][9] = {0};
     // 历史记录
     QJsonArray m_history;
     // 当前的游戏模式
@@ -45,10 +46,10 @@ public:
     Color m_color = BLACK;
     // 进行一个回合
     void oneTurn();
+    // 当前的行动
+    Action m_cur_action;
 
 private:
-    // 人类是否做出响应
-    bool m_human_respond = false;
     // 回合中得到的respond
     QJsonObject m_jsonobj;
     // 辅助判断可行性的数组，记录某一位置是否已经被访问过
@@ -62,7 +63,9 @@ private:
     // 判断某一位置是否为合法落子点
     bool judgeAvailable(int x, int y);
     // 传数据给AI并获得输出,改变盘面
-    void botOneStep();
+    Action botOneStep();
+    // 颜色对换
+    void changeColor();
 };
 
 #endif // REFEREE_H

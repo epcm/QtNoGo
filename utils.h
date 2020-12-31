@@ -22,5 +22,10 @@ struct Action
     int x = -1;
     int y = -1;
 };
-
+const int kBoardSizeNum = 9;
+const int kBoardMargin = 30; // 棋盘边缘空隙
+const int kRadius = 15; // 棋子半径
+const int kMarkSize = 6; // 落子标记边长
+const int kBlockSize = 40; // 格子的大小
+const int kPosDelta = 20; // 鼠标点击的模糊距离上限
 #endif // UTILS_H
