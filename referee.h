@@ -28,12 +28,11 @@ public:
 signals:
     void updateSignal();
 public slots:
-    // 传数据给人类并获得输出
-    //void humanOneStep(Action a);
+    // 判断游戏局面状况
     void judge();
+    // 根据游戏类型信号初始化游戏
+    void initGame(int number);
 public:
-    // 人类玩家时限
-    int m_time_limit = 60;
     // 当前盘面
     int m_board[9][9] = {0};
     // 历史记录

@@ -168,3 +168,19 @@ Action Referee::botOneStep()
     m_cur_action =  ai.aiAction(m_color, m_board);
     return m_cur_action;
 }
+
+void Referee::initGame(int number)
+{
+    switch (number)
+    {
+    case 0:
+       m_game_mode = PVC;
+       m_player = HUMAN;
+       break;
+    case 1:
+       m_game_mode = PVP;
+       m_player = HUMAN;
+    default:
+        break;
+    }
+}

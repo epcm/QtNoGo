@@ -11,18 +11,23 @@ CONFIG += console
 
 SOURCES += \
     ai/aimcts.cpp \
+    gamewidget.cpp \
     main.cpp \
     mainwindow.cpp \
-    referee.cpp
+    referee.cpp \
+    welcomewidget.cpp
 
 HEADERS += \
     ai/aimcts.h \
+    gamewidget.h \
     mainwindow.h \
     referee.h \
-    utils.h
+    utils.h \
+    welcomewidget.h
 
 FORMS += \
-    mainwindow.ui
+    gamewidget.ui \
+    welcomewidget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -30,6 +35,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    ai.qrc \
     pic.qrc
 
