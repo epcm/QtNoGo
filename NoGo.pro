@@ -15,6 +15,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     referee.cpp \
+    settingdialog.cpp \
     welcomewidget.cpp
 
 HEADERS += \
@@ -22,11 +23,13 @@ HEADERS += \
     gamewidget.h \
     mainwindow.h \
     referee.h \
+    settingdialog.h \
     utils.h \
     welcomewidget.h
 
 FORMS += \
     gamewidget.ui \
+    settingdialog.ui \
     welcomewidget.ui
 
 # Default rules for deployment.

@@ -17,6 +17,7 @@ public:
     Referee* referee = new Referee;
 signals:
     void display(int num);
+    void showGameSignal(int number);
 private:
     Ui::GameWidget *ui;
     int clickPosRow, clickPosCol; // 存储将点击的位置
@@ -27,8 +28,9 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     // 实际落子
     void mouseReleaseEvent(QMouseEvent *event);
-private slots:
+public slots:
     void startUpdate();
+    void initGame();
 };
 
 #endif // GAMEWIDGET_H

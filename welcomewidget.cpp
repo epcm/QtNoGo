@@ -15,14 +15,9 @@ WelcomeWidget::~WelcomeWidget()
     delete ui;
 }
 
-void WelcomeWidget::on_PVCPushButton_clicked()
+
+void WelcomeWidget::on_NewGamePushButton_clicked()
 {
-    emit display(1);
-    emit gameType(0);
+    emit displaySetting();
 }
 
-void WelcomeWidget::on_PVPPushButton_clicked()
-{
-    emit display(1);
-    emit gameType(1);
-}

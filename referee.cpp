@@ -18,6 +18,7 @@ Referee::Referee(QObject *parent) : QObject(parent)
     memset(m_board, 0, sizeof(m_board));
     m_game_mode = NOCHOICE;
     m_player = HUMAN;
+    connect(m_timer, &QTimer::timeout, this, &Referee::judgeTime);
 }
 
 void Referee::changeColor()
@@ -28,32 +29,14 @@ void Referee::changeColor()
         m_color = BLACK;
     return;
 }
-// 进行一个回合
-// 包括送信、收信、判断、更新三个阶段
-void Referee::oneTurn()
+
+
+void Referee::judgeTime()
 {
-    /*if(m_player == BOT)
-    {
-        m_cur_action = botOneStep();
-        m_player = HUMAN;
-        QTimer::singleShot(1000, this, SLOT(judge()));
-    }
-    else    // 等待人类响应
-    {
-        int start = clock();
-        while(m_player == HUMAN &&  (clock()-start < m_time_limit * CLOCKS_PER_SEC))
-        {
-            // 空循环定时
-        }
-        if(m_player == HUMAN)
-        {
-            // 超时处理
-            qDebug() << tr("TLE");
-            return;
-        }
-
-    }*/
-
+    if(m_player == HUMAN && clock() - m_start_time > m_human_time_limit*1000)
+        qDebug() << "HUMAN_TLE";
+    else if(m_player == BOT && clock() - m_start_time > m_bot_time_limit*1000)
+        qDebug() << "BOT_TLE";
 }
 
 void Referee::judge()
@@ -84,6 +67,7 @@ void Referee::judge()
         return;
     }
     changeColor();
+    m_start_time = clock();
     if(m_player == BOT)
         m_player = HUMAN;
     else if(m_player == HUMAN)
@@ -169,18 +153,39 @@ Action Referee::botOneStep()
     return m_cur_action;
 }
 
-void Referee::initGame(int number)
+
+// 设定BOT时限
+void Referee::setBotTimeLimit(const QString &text)
 {
-    switch (number)
+    m_bot_time_limit = text.toInt();
+}
+// 设定HUMAN时限
+void Referee::setHumanTimeLimit(const QString &text)
+{
+    m_human_time_limit = text.toInt();
+}
+// 设定游戏类型
+void Referee::setGameMode(int index)
+{
+    if(index == 0)
     {
-    case 0:
-       m_game_mode = PVC;
-       m_player = HUMAN;
-       break;
-    case 1:
-       m_game_mode = PVP;
-       m_player = HUMAN;
-    default:
-        break;
+        m_game_mode = PVC;
+    }
+    else if(index == 1)
+    {
+        m_game_mode = PVP;
     }
 }
+// 设定先手方
+void Referee::setFirstPlayer(int index)
+{
+    if(index == 0)
+    {
+        m_player = HUMAN;
+    }
+    else if(index == 1)
+    {
+        m_player = BOT;
+    }
+}
+

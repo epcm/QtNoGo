@@ -168,3 +168,12 @@ void GameWidget::mouseReleaseEvent(QMouseEvent *event)
         update();
     }
 }
+
+void GameWidget::initGame()
+{
+    referee->m_start_time = clock();
+    emit showGameSignal(1);
+    if(referee->m_player == BOT)
+        referee->botOneStep();
+    referee->m_timer->start(10);
+}

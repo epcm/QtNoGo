@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "gamewidget.h"
 #include "welcomewidget.h"
+#include "settingdialog.h"
 #include <QStackedLayout>
 #include <QVBoxLayout>
 
@@ -15,9 +16,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+public slots:
+    void showSettingSignal();
 private:
     GameWidget* gamewidget;
     WelcomeWidget* welcomewidget;
+    SettingDialog* settingdialog;
+
     QStackedLayout *stackLayout;
     QVBoxLayout *mainLayout;
 

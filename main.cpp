@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 
 #include <QApplication>
-#include "dialog.h"
+#include "settingdialog.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,5 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     //w.show();
+    //SettingDialog h;
+    //h.show();
     return a.exec();
 }
