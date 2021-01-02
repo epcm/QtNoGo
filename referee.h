@@ -5,6 +5,7 @@
 #include <vector>
 #include <utils.h>
 #include "./ai/aimcts.h"
+#include "hintwidget.h"
 #include <QTimer>
 // json相关库
 #include<qjsondocument.h>
@@ -29,6 +30,8 @@ public:
 signals:
     void updateSignal();
     void botFinishedSignal();
+    void displayHintSignal(int number); //显示提示信息
+    void pauseSignal();
 public slots:
     // 判断游戏局面状况
     void judge();

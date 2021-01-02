@@ -20,6 +20,8 @@ public:
     ~GameWidget();
     Referee* referee = new Referee;
     QMenuBar* menubar;
+    // hint弹窗
+    HintWidget* h;
 signals:
     void display(int num);
     void showGameSignal(int number);
@@ -43,6 +45,7 @@ private slots:
     void on_ReactPushButton_clicked();
     void on_HintPushButton_clicked();
     void on_ReturnPushButton_clicked();
+    void displayHint(int number);
 };
 
 #endif // GAMEWIDGET_H

@@ -21,7 +21,7 @@
     <rect>
      <x>200</x>
      <y>250</y>
-     <width>160</width>
+     <width>204</width>
      <height>90</height>
     </rect>
    </property>
@@ -58,7 +58,7 @@ color: rgb(219, 237, 243);</string>
       <property name="font">
        <font>
         <family>Arial Rounded MT Bold</family>
-        <pointsize>22</pointsize>
+        <pointsize>19</pointsize>
         <weight>50</weight>
         <italic>false</italic>
         <bold>false</bold>
@@ -69,11 +69,11 @@ color: rgb(219, 237, 243);</string>
        <cursorShape>PointingHandCursor</cursorShape>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: 22pt &quot;Arial Rounded MT Bold&quot;;
+       <string notr="true">font: 19pt &quot;Arial Rounded MT Bold&quot;;
 color: rgb(219, 237, 243);</string>
       </property>
       <property name="text">
-       <string>Replay</string>
+       <string>Watch Replay</string>
       </property>
       <property name="flat">
        <bool>true</bool>

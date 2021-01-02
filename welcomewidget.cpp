@@ -1,7 +1,6 @@
 #include "welcomewidget.h"
 #include "ui_welcomewidget.h"
 #include "utils.h"
-#include "hintwidget.h"
 
 WelcomeWidget::WelcomeWidget(QWidget *parent) :
     QWidget(parent),
@@ -9,8 +8,7 @@ WelcomeWidget::WelcomeWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     //setFixedSize(kBoardMargin * 2 + kBlockSize * (kBoardSizeNum-1), kBoardMargin * 2 + kBlockSize * (kBoardSizeNum-1));
-    HintWidget* h = new HintWidget("hhhhhh",this);
-    h->show();
+
 }
 
 WelcomeWidget::~WelcomeWidget()

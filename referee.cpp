@@ -38,10 +38,16 @@ void Referee::changeColor()
 
 void Referee::judgeTime()
 {
-    if(m_player == HUMAN && clock() - m_start_time > m_human_time_limit*1000)
-        qDebug() << "HUMAN_TLE";
-    else if(m_player == BOT && clock() - m_start_time > m_bot_time_limit*1000)
-        qDebug() << "BOT_TLE";
+    if((m_player == HUMAN && clock() - m_start_time > m_human_time_limit*1000)
+            ||(m_player == BOT && clock() - m_start_time > m_bot_time_limit*1000))
+    {
+        if(m_color == BLACK)
+            emit displayHintSignal(0);
+        else if(m_color == WHITE)
+            emit displayHintSignal(1);
+        endGame();
+    }
+
 }
 
 void Referee::judge()
@@ -62,16 +68,25 @@ void Referee::judge()
     else
     {
         qDebug() << tr("INVALID_POS");
-
+        emit displayHintSignal(2);
+        endGame();
         return;
-        //pass;对非法放置的处理
     }
     if(judgeWin())
     {
         // 送信报道胜者
         qDebug() << tr("winner is:") << m_color;
-        HintWidget* hintwidget = new HintWidget("hintttt");
-        hintwidget->show();
+        switch (m_color)
+        {
+        case BLACK:
+            emit displayHintSignal(3);
+            break;
+        case WHITE:
+            emit displayHintSignal(4);
+            break;
+        default:
+            break;
+        }
         endGame();
         return;
     }
@@ -89,6 +104,7 @@ void Referee::judge()
 void Referee::endGame()
 {
     m_timer->stop();
+    m_player = NEITHER;
 }
 
 bool Referee::inBorder(int x, int y)
@@ -210,6 +226,7 @@ void Referee::resetReferee()
 {
     memset(m_board, 0, sizeof(m_board));
     m_player = m_first_player;
+    m_color = BLACK;
     while(!m_history.empty())
         m_history.pop_back();
     m_timer->stop();
@@ -249,6 +266,7 @@ void Referee::setBoardByHistory()
         changeColor();
         changePlayer();
     }
+
 }
 
 void Referee::saveGame()
@@ -327,5 +345,6 @@ void Referee::loadGame()
         m_bot_time_limit = loadData["BotTimeLimit"].toDouble();
         m_history = loadData["History"].toArray();
         setBoardByHistory();
+        emit pauseSignal();
     }
 }

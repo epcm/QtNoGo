@@ -35,12 +35,46 @@ GameWidget::GameWidget(QWidget *parent) :
     menubar->show();
     connect(saveAction, &QAction::triggered, referee, &Referee::saveGame);
     connect(loadAction, &QAction::triggered, referee, &Referee::loadGame);
-    qDebug() << "init gamewidget";
+    connect(referee, &Referee::displayHintSignal, this, &GameWidget::displayHint);
+    connect(referee, &Referee::pauseSignal, this, &GameWidget::on_PausePushButton_clicked);
 }
 
 GameWidget::~GameWidget()
 {
     delete ui;
+}
+
+void GameWidget::displayHint(int number)
+{
+    switch (number)
+    {
+    case 0: //红方超时
+        h = new HintWidget("RED_TIME_LIMIT_EXCEEDED", this);
+        h->setStyleSheet("background-color:rgba(247,56,89,200)");
+        break;
+    case 1: //蓝方超时
+        h = new HintWidget("BLUE_TIME_LIMIT_EXCEEDED", this);
+        h->setStyleSheet("background-color:rgba(219,237,243,200)");
+        break;
+    case 2: //位置无效
+        h = new HintWidget("INVALID_POS", this);
+        if(referee->m_color == BLACK) //红方无效
+            h->setStyleSheet("background-color:rgba(247,56,89,200)");
+        else if(referee->m_color == WHITE) //蓝方无效
+            h->setStyleSheet("background-color:rgba(219,237,243,200)");
+        break;
+    case 3: //红方胜
+        h = new HintWidget("WINNER: RED", this);
+        h->setStyleSheet("background-color:rgba(247,56,89,200)");
+        break;
+    case 4: //蓝方胜
+        h = new HintWidget("WINNER: LIGHT BLUE", this);
+        h->setStyleSheet("background-color:rgba(219,237,243,200)");
+        break;
+    default:
+        break;
+    }
+    h->show();
 }
 
 void GameWidget::startUpdate()
@@ -185,6 +219,7 @@ void GameWidget::mouseReleaseEvent(QMouseEvent *event)
 void GameWidget::initGame()
 {
     emit showGameSignal(1);
+    referee->resetReferee();
     referee->m_start_time = clock();
     if(referee->m_player == BOT)
         referee->botOneStep();
@@ -210,6 +245,7 @@ void GameWidget::on_PausePushButton_clicked()
         referee->m_timer->start(10);
         referee->m_paused = false;
         referee->m_player = HUMAN;
+        ui->PauseLabel->setText("Pause");
     }
     else if(referee->m_player == HUMAN && !referee->m_paused) //只有人一方回合才能暂停
     {
@@ -217,6 +253,7 @@ void GameWidget::on_PausePushButton_clicked()
         referee->m_timer->stop();
         referee->m_paused = true;
         referee->m_player = NEITHER;
+        ui->PauseLabel->setText("Continue");
     }
 
 }
@@ -245,7 +282,6 @@ void GameWidget::on_HintPushButton_clicked()
 {
     AIMCTS ai;
     Action a =  ai.aiAction(referee->m_color, referee->m_board);
-    qDebug() << a.x << a.y;
     HintWidget* hintwidget = new HintWidget("hintttt", this);
     int x, y;
     x = kBoardMargin+kBlockSize*a.x;
