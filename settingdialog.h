@@ -28,9 +28,9 @@ private slots:
 
     void on_FirstPlayerSelect_currentIndexChanged(int index);
 
-    void on_HumanTimeEdit_textEdited(const QString &arg1);
+    void on_HumanTimeEdit_textChanged(const QString &arg1);
 
-    void on_BotTimeEdit_textEdited(const QString &arg1);
+    void on_BotTimeEdit_textChanged(const QString &arg1);
 
 private:
     Ui::SettingDialog *ui;

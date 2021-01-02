@@ -3,9 +3,13 @@
 #include <QProcess>
 #include <QDebug>
 #include <QTimer>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
+#include "hintwidget.h"
 
 /*
-*   @file: referee.cpp
+//*   @file: referee.cpp
 *   @brief: 这是裁判类实现
 *           实现游戏的逻辑控制，包括进程调度，局面判断
 *   @author: epcm
@@ -16,9 +20,10 @@
 Referee::Referee(QObject *parent) : QObject(parent)
 {
     memset(m_board, 0, sizeof(m_board));
-    m_game_mode = NOCHOICE;
+    m_game_mode = PVC;
     m_player = HUMAN;
     connect(m_timer, &QTimer::timeout, this, &Referee::judgeTime);
+    connect(this, &Referee::botFinishedSignal, this, &Referee::judge);
 }
 
 void Referee::changeColor()
@@ -57,6 +62,7 @@ void Referee::judge()
     else
     {
         qDebug() << tr("INVALID_POS");
+
         return;
         //pass;对非法放置的处理
     }
@@ -64,17 +70,25 @@ void Referee::judge()
     {
         // 送信报道胜者
         qDebug() << tr("winner is:") << m_color;
+        HintWidget* hintwidget = new HintWidget("hintttt");
+        hintwidget->show();
+        endGame();
         return;
     }
     changeColor();
     m_start_time = clock();
     if(m_player == BOT)
         m_player = HUMAN;
-    else if(m_player == HUMAN)
+    else if(m_player == HUMAN && m_game_mode == PVC)
     {
         m_player = BOT;
         botOneStep();
     }
+}
+
+void Referee::endGame()
+{
+    m_timer->stop();
 }
 
 bool Referee::inBorder(int x, int y)
@@ -145,12 +159,12 @@ bool Referee::judgeAvailable(int x, int y)
     return true;
 }
 
-Action Referee::botOneStep()
+void Referee::botOneStep()
 {
-    QTimer::singleShot(1000, this, SLOT(judge()));
+    //QTimer::singleShot(1000*m_bot_time_limit, this, SLOT(judge()));
     AIMCTS ai;
     m_cur_action =  ai.aiAction(m_color, m_board);
-    return m_cur_action;
+    emit botFinishedSignal();
 }
 
 
@@ -182,10 +196,136 @@ void Referee::setFirstPlayer(int index)
     if(index == 0)
     {
         m_player = HUMAN;
+        m_first_player = HUMAN;
     }
     else if(index == 1)
     {
         m_player = BOT;
+        m_first_player = BOT;
     }
 }
 
+// 重置
+void Referee::resetReferee()
+{
+    memset(m_board, 0, sizeof(m_board));
+    m_player = m_first_player;
+    while(!m_history.empty())
+        m_history.pop_back();
+    m_timer->stop();
+}
+
+void Referee::changePlayer()
+{
+    if(m_game_mode == PVC)
+    {
+        if(m_player == BOT)
+            m_player = HUMAN;
+        else if(m_player == HUMAN)
+            m_player = BOT;
+    }
+}
+void Referee::setBoardByHistory()
+{
+    memset(m_board, 0, sizeof(m_board));
+    m_color = BLACK;
+    for(int i = 0; i < m_history.size(); i++)
+    {
+        int x, y;
+        QJsonArray arr = m_history[i].toArray();
+        QVariantList vl = arr.toVariantList();
+        x = vl[0].toInt();
+        y = vl[1].toInt();
+        switch (m_color)
+        {
+        case BLACK:
+            m_board[x][y] = 1;
+            break;
+        case WHITE:
+            m_board[x][y] = -1;
+        default:
+            break;
+        }
+        changeColor();
+        changePlayer();
+    }
+}
+
+void Referee::saveGame()
+{
+    QJsonObject gameObject;
+    gameObject["GameMode"] = m_game_mode;
+    gameObject["FirstPlayer"] = m_first_player;
+    gameObject["HumanTimeLimit"] = m_human_time_limit;
+    gameObject["BotTimeLimit"] = m_bot_time_limit;
+    gameObject["History"] = m_history;
+    QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Save Game"), "",tr("JSON (*.json)"));
+    if (fileName.isEmpty())
+        return;
+    else
+    {
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly))
+        {
+            QMessageBox::information(nullptr, tr("Unable to open file"),file.errorString());
+
+            return;
+        }
+        file.write(QJsonDocument(gameObject).toJson());
+        file.close();
+    }
+}
+
+void Referee::loadGame()
+{
+    QString fileName = QFileDialog::getOpenFileName(nullptr,tr("Load Game"), "",tr("JSON (*.json)"));
+
+
+    if (fileName.isEmpty())
+        return;
+    else
+    {
+        QFile file(fileName);
+
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            QMessageBox::information(nullptr, tr("Unable to open file"),file.errorString());
+
+            return;
+        }
+
+        QByteArray saveData = file.readAll();
+
+        QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+        QJsonObject loadData = loadDoc.object();
+
+
+        switch (loadData["GameMode"].toInt())
+        {
+        case PVP:
+            m_game_mode = PVP;
+            break;
+        case PVC:
+            m_game_mode = PVC;
+        default:
+            break;
+        }
+
+        switch (loadData["FirstPlayer"].toInt())
+        {
+        case HUMAN:
+            m_first_player = HUMAN;
+            break;
+        case BOT:
+            m_first_player = BOT;
+        default:
+            break;
+        }
+
+        m_human_time_limit = loadData["HumanTimeLimit"].toDouble();
+        m_bot_time_limit = loadData["BotTimeLimit"].toDouble();
+        m_history = loadData["History"].toArray();
+        setBoardByHistory();
+    }
+}

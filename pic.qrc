@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>pic/QTNoGo.png</file>
+        <file>pic/BlueButton.png</file>
+        <file>pic/RedButton.png</file>
     </qresource>
 </RCC>

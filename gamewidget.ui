@@ -26,26 +26,152 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
-{
-	image: url(:/pic/QTNoGo.png);
-	background-color: rgb(40, 49, 73);
-}</string>
+   <string notr="true">QWidget#GameWidget
+{	background-image: url(:/pic/QTNoGo.png);
+	background-color: rgb(40, 49, 73);}</string>
   </property>
-  <widget class="QProgressBar" name="progressBar">
+  <widget class="QPushButton" name="ReturnPushButton">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>70</y>
-     <width>118</width>
-     <height>23</height>
+     <x>430</x>
+     <y>40</y>
+     <width>80</width>
+     <height>41</height>
     </rect>
    </property>
-   <property name="value">
-    <number>24</number>
+   <property name="styleSheet">
+    <string notr="true">font: 9pt &quot;Arial Rounded MT Bold&quot;;</string>
    </property>
-   <property name="textVisible">
-    <bool>false</bool>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="HintPushButton">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>200</y>
+     <width>45</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton#HintPushButton
+{
+border-radius: 22;
+border-width: 2px; 
+border-style:solid;
+border-color:#dbedf3;
+}</string>
+   </property>
+   <property name="text">
+    <string>AIHint</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="RestartPushButton">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>200</y>
+     <width>45</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ReactPushButton">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>310</y>
+     <width>45</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="PausePushButton">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>310</y>
+     <width>45</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>170</y>
+     <width>54</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>AI Hint</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>170</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Restart</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>280</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>React</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>280</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Pause</string>
    </property>
   </widget>
  </widget>

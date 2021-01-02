@@ -12,6 +12,7 @@ CONFIG += console
 SOURCES += \
     ai/aimcts.cpp \
     gamewidget.cpp \
+    hintwidget.cpp \
     main.cpp \
     mainwindow.cpp \
     referee.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     ai/aimcts.h \
     gamewidget.h \
+    hintwidget.h \
     mainwindow.h \
     referee.h \
     settingdialog.h \

@@ -10,7 +10,7 @@
 //游戏模式
 enum GameMode{PVP, PVC, CVC, NOCHOICE};
 // 玩家身份标识
-enum Player{HUMAN, BOT};
+enum Player{HUMAN, BOT, NEITHER};
 // 颜色标识
 enum Color{BLACK = 1, WHITE = -1};
 // 合法的移动方式
@@ -28,4 +28,6 @@ const int kRadius = 15; // 棋子半径
 const int kMarkSize = 10; // 落子标记边长
 const int kBlockSize = 40; // 格子的大小
 const int kPosDelta = 20; // 鼠标点击的模糊距离上限
+const int hintWidgetWidth = 200;//提示信息的宽度
+const int hintWidgetHeight = 140;//提示信息的高度
 #endif // UTILS_H

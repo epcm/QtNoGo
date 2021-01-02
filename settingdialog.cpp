@@ -14,7 +14,7 @@ SettingDialog::SettingDialog(QWidget *parent) :
     ql << "PVC" << "PVP";
     ui->GameModeSelect->addItems(ql);
     // 初始化输入框
-    ui->BotTimeEdit->setText("2");
+    ui->BotTimeEdit->setText("1");
     ui->HumanTimeEdit->setText("30");
 }
 
@@ -44,12 +44,12 @@ void SettingDialog::on_FirstPlayerSelect_currentIndexChanged(int index)
 }
 
 // 接收HumanTimeEdit设置信息并发信给referee
-void SettingDialog::on_HumanTimeEdit_textEdited(const QString &arg1)
+void SettingDialog::on_HumanTimeEdit_textChanged(const QString &arg1)
 {
     emit humanTimeEditSignal(arg1);
 }
 
-void SettingDialog::on_BotTimeEdit_textEdited(const QString &arg1)
+void SettingDialog::on_BotTimeEdit_textChanged(const QString &arg1)
 {
     emit botTimeEditSignal(arg1);
 }

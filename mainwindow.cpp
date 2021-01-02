@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     // 一定要注意信号与槽的参数匹配
     connect(settingdialog, &SettingDialog::startGameSignal, gamewidget, &GameWidget::initGame);                         //调用游戏初始化函数
     connect(gamewidget, &GameWidget::showGameSignal, stackLayout, &QStackedLayout::setCurrentIndex);                    //切换到游戏页面
+    connect(gamewidget, &GameWidget::showWelcomeSignal, stackLayout, &QStackedLayout::setCurrentIndex);                 //返回开始界面
     connect(welcomewidget, &WelcomeWidget::displaySetting, this, &MainWindow::showSettingSignal);                       //显示设置对话框
 
     connect(settingdialog, &SettingDialog::gameModeSelectSignal, gamewidget->referee, &Referee::setGameMode);           //设置游戏模式

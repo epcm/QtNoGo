@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include "referee.h"
+#include <QMenuBar>
+#include <QMenu>
+#include <QAction>
+#include <QVBoxLayout>
 namespace Ui {
 class GameWidget;
 }
@@ -15,9 +19,11 @@ public:
     explicit GameWidget(QWidget *parent = nullptr);
     ~GameWidget();
     Referee* referee = new Referee;
+    QMenuBar* menubar;
 signals:
     void display(int num);
     void showGameSignal(int number);
+    void showWelcomeSignal(int number);
 private:
     Ui::GameWidget *ui;
     int clickPosRow, clickPosCol; // 存储将点击的位置
@@ -31,6 +37,12 @@ protected:
 public slots:
     void startUpdate();
     void initGame();
+private slots:
+    void on_RestartPushButton_clicked();
+    void on_PausePushButton_clicked();
+    void on_ReactPushButton_clicked();
+    void on_HintPushButton_clicked();
+    void on_ReturnPushButton_clicked();
 };
 
 #endif // GAMEWIDGET_H
