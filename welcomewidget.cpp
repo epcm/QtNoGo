@@ -22,3 +22,9 @@ void WelcomeWidget::on_NewGamePushButton_clicked()
     emit displaySetting();
 }
 
+
+void WelcomeWidget::on_ReplayPushButton_clicked()
+{
+    emit initReplaySignal();
+    emit showReplaySignal(1);
+}

@@ -39,6 +39,7 @@ protected:
 public slots:
     void startUpdate();
     void initGame();
+    void initReplay();
 private slots:
     void on_RestartPushButton_clicked();
     void on_PausePushButton_clicked();

@@ -51,9 +51,14 @@ public slots:
     void loadGame();
     // 结束一局的反应
     void endGame();
+    // 通过历史记录播放录像
+    void replayByHistory();
 public:
     // 时间信号生成器
     QTimer* m_timer = new QTimer(this);
+    QTimer* m_replay_timer = new QTimer(this);
+    // 回放的局数
+    int m_replay_turn = 0;
     // 当前盘面
     int m_board[9][9] = {0};
     // 历史记录
@@ -84,6 +89,10 @@ public:
     void resetReferee();
     // 通过历史记录恢复局面
     void setBoardByHistory();
+    // 结束录像
+    void endReplay();
+    // 继续录像
+    void continueReplay();
 private:
     // 回合中得到的respond
     QJsonObject m_jsonobj;

@@ -22,7 +22,7 @@ HintWidget::HintWidget(QString text,QWidget *parent) : QLabel(text, parent)
         this->setGeometry(parent->width()/2-hintWidgetWidth/2,parent->height()/2-hintWidgetHeight/2,
                           hintWidgetWidth,hintWidgetHeight);
     else
-        this->setGeometry(590/2-hintWidgetWidth/2,400/2-hintWidgetHeight/2,
+        this->setGeometry(640/2-hintWidgetWidth/2,460/2-hintWidgetHeight/2,
                           hintWidgetWidth,hintWidgetHeight);
 }
 

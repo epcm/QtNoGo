@@ -90,12 +90,14 @@ void GameWidget::paintEvent(QPaintEvent *event)
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
 
+
     // 绘制棋盘
-    QRectF target(0.0, 0.0, 580.0, 400.0);
-    QRectF source(0.0, 0.0, 580.0, 400.0);
+    QRectF target(0.0, 0.0, this->width(), this->height());
+    QRectF source(0.0, 0.0, this->width(), this->height());
     QImage image(":/pic/QTNoGo.png");
     painter.drawImage(target, image, source);
 
+    /*
     // 绘制按钮（用图片做按钮背景锯齿太明显了）
     pen.setWidth(6);
     QRect button;
@@ -113,7 +115,7 @@ void GameWidget::paintEvent(QPaintEvent *event)
     painter.drawEllipse(button);
     button = ui->PausePushButton->geometry();
     painter.drawEllipse(button);
-
+    */
     // 绘制落子标记(防止鼠标出框越界)
     if (clickPosRow >= 0 && clickPosRow < kBoardSizeNum && clickPosCol >= 0 && clickPosCol < kBoardSizeNum)
     {
@@ -226,8 +228,25 @@ void GameWidget::initGame()
     referee->m_timer->start(10);
 }
 
+void GameWidget::initReplay()
+{
+    QJsonArray temp = referee->m_history;
+    referee->resetReferee();
+    referee->m_history = temp;
+    referee->m_replay_turn = 0;
+    referee->m_game_mode = REPLAY;
+    referee->m_player = NEITHER;
+    //referee->m_replay_timer->start(1500);
+}
+
 void GameWidget::on_RestartPushButton_clicked()
 {
+    if(referee->m_game_mode == REPLAY)
+    {
+        initReplay();
+        referee->m_replay_timer->start(REPLAYSPEED*1000);
+        return;
+    }
     referee->resetReferee();
     referee->m_start_time = clock();
     repaint();
@@ -238,14 +257,29 @@ void GameWidget::on_RestartPushButton_clicked()
 
 void GameWidget::on_PausePushButton_clicked()
 {
-
+    if(referee->m_game_mode == REPLAY)
+    {
+        if(referee->m_paused) //恢复播放
+        {
+            referee->continueReplay();
+            referee->m_paused = false;
+            ui->PauseLabel->setText("Pause");
+        }
+        else if(!referee->m_paused) //暂停播放
+        {
+            referee->endReplay();
+            referee->m_paused = true;
+            ui->PauseLabel->setText("Continue");
+        }
+        return;
+    }
     if(referee->m_paused) //解除暂停
     {
         referee->m_start_time = clock()-referee->m_time_when_paused;
         referee->m_timer->start(10);
         referee->m_paused = false;
         referee->m_player = HUMAN;
-        ui->PauseLabel->setText("Pause");
+        ui->PauseLabel->setText("Continue");
     }
     else if(referee->m_player == HUMAN && !referee->m_paused) //只有人一方回合才能暂停
     {

@@ -23,6 +23,7 @@ Referee::Referee(QObject *parent) : QObject(parent)
     m_game_mode = PVC;
     m_player = HUMAN;
     connect(m_timer, &QTimer::timeout, this, &Referee::judgeTime);
+    connect(m_replay_timer, &QTimer::timeout, this, &Referee::replayByHistory);
     connect(this, &Referee::botFinishedSignal, this, &Referee::judge);
 }
 
@@ -319,15 +320,18 @@ void Referee::loadGame()
         QJsonObject loadData = loadDoc.object();
 
 
-        switch (loadData["GameMode"].toInt())
+        if(m_game_mode != REPLAY)
         {
-        case PVP:
-            m_game_mode = PVP;
-            break;
-        case PVC:
-            m_game_mode = PVC;
-        default:
-            break;
+            switch (loadData["GameMode"].toInt())
+            {
+            case PVP:
+                m_game_mode = PVP;
+                break;
+            case PVC:
+                m_game_mode = PVC;
+            default:
+                break;
+            }
         }
 
         switch (loadData["FirstPlayer"].toInt())
@@ -344,7 +348,53 @@ void Referee::loadGame()
         m_human_time_limit = loadData["HumanTimeLimit"].toDouble();
         m_bot_time_limit = loadData["BotTimeLimit"].toDouble();
         m_history = loadData["History"].toArray();
-        setBoardByHistory();
-        emit pauseSignal();
+        m_time_when_paused = 0;
+
+        if(m_game_mode == REPLAY)
+        {
+            m_replay_timer->start(REPLAYSPEED*1000);
+        }
+        else
+        {
+            setBoardByHistory();
+            emit pauseSignal();
+        }
     }
+}
+
+void Referee::endReplay()
+{
+    m_replay_timer->stop();
+}
+
+void Referee::continueReplay()
+{
+    m_replay_timer->start(REPLAYSPEED*1000);
+}
+
+void Referee::replayByHistory()
+{
+    if(m_replay_turn == m_history.size())
+    {
+        endReplay();
+        return;
+    }
+    int x, y;
+    QJsonArray arr = m_history[m_replay_turn++].toArray();
+    QVariantList vl = arr.toVariantList();
+    x = vl[0].toInt();
+    y = vl[1].toInt();
+    switch (m_color)
+    {
+    case BLACK:
+        m_board[x][y] = 1;
+        break;
+    case WHITE:
+        m_board[x][y] = -1;
+    default:
+        break;
+    }
+    emit updateSignal();
+    changeColor();
+    changePlayer();
 }

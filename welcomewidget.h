@@ -17,10 +17,14 @@ public:
 
 signals:
     void displaySetting();       //显示配置页的信号
+    void initReplaySignal();     //初始化回放的信号
+    void showReplaySignal(int number);
 private slots:
 
     void on_NewGamePushButton_clicked();
 
+
+    void on_ReplayPushButton_clicked();
 
 private:
     Ui::WelcomeWidget *ui;
