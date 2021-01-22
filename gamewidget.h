@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QVBoxLayout>
+
 namespace Ui {
 class GameWidget;
 }
@@ -40,6 +41,8 @@ public slots:
     void startUpdate();
     void initGame();
     void initReplay();
+    // 显示About信息
+    void showAboutWidget();
 private slots:
     void on_RestartPushButton_clicked();
     void on_PausePushButton_clicked();

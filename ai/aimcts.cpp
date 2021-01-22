@@ -227,6 +227,6 @@ Action AIMCTS::aiAction(Color color, int board[][9])
                 a.y = j;
                 break;
             }
-    qDebug()<< node_count;
+    qDebug()<< "MCTS_Nodes"<< node_count;
     return a;
 }

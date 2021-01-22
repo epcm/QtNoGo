@@ -10,12 +10,12 @@ HintWidget::HintWidget(QString text,QWidget *parent) : QLabel(text, parent)
     this->setText(text);
     //设置定时器，到时自我销毁
     timer = new QTimer(this);
-    timer->start(1000);//时间1秒
+    timer->start(2000);//时间1秒
     timer->setSingleShot(true);//仅触发一次
     connect(timer, SIGNAL(timeout()), this, SLOT(onTimeDestroy()));
     // 默认样式表
-    this->setStyleSheet("background-color:rgba(219,237,243,200);border-radius:5px;"
-                        "font: 10pt 'Arial Rounded MT Bold'");
+    this->setStyleSheet("background-color:rgba(219,237,243,200);border-radius:20px;"
+                        "font:24px 'Arial Rounded MT Bold'");
     this->setAlignment(Qt::AlignCenter);
     // 控件默认的显示位置
     if(parent)

@@ -6,34 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>300</height>
+    <width>500</width>
+    <height>550</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(40, 49, 73);</string>
+   <string notr="true">QWidget{
+background-color: rgb(40, 49, 73);
+font: 24px 'Arial Rounded MT Bold';
+color: #7988a8;}</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>50</y>
-     <width>201</width>
-     <height>181</height>
+     <x>60</x>
+     <y>100</y>
+     <width>371</width>
+     <height>361</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>游戏类型</string>
-        </property>
-       </widget>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="GameModeSelect"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="HumanTimeEdit"/>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_3">
@@ -42,11 +44,22 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="GameModeSelect"/>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Human时限(s)   </string>
+        </property>
+       </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QComboBox" name="FirstPlayerSelect"/>
+      <item row="2" column="1">
+       <widget class="QLineEdit" name="BotTimeEdit"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Game Type</string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="0">
        <widget class="QLabel" name="label_2">
@@ -55,18 +68,8 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="BotTimeEdit"/>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Human时限(s)   </string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="HumanTimeEdit"/>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="FirstPlayerSelect"/>
       </item>
      </layout>
     </item>

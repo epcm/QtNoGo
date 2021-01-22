@@ -23,12 +23,13 @@ struct Action
     int y = -1;
 };
 const int kBoardSizeNum = 9;
-const int kBoardMargin = 70; // 棋盘边缘空隙
-const int kRadius = 15; // 棋子半径
-const int kMarkSize = 10; // 落子标记边长
-const int kBlockSize = 40; // 格子的大小
-const int kPosDelta = 20; // 鼠标点击的模糊距离上限
-const int hintWidgetWidth = 200;//提示信息的宽度
-const int hintWidgetHeight = 140;//提示信息的高度
-const int REPLAYSPEED = 1.5;
+const int kBoardMargin = 140; // 棋盘边缘空隙
+const int kRadius = 30; // 棋子半径
+const int kMarkSize = 20; // 落子标记边长
+const int kBlockSize = 80; // 格子的大小
+const int kPosDelta = 40; // 鼠标点击的模糊距离上限
+const int hintWidgetWidth = 400;//提示信息的宽度
+const int hintWidgetHeight = 280;//提示信息的高度
+const double REPLAYSPEED = 1.5;
+
 #endif // UTILS_H

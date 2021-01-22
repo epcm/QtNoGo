@@ -38,7 +38,7 @@ void Referee::changeColor()
 
 
 void Referee::judgeTime()
-{
+{    
     if((m_player == HUMAN && clock() - m_start_time > m_human_time_limit*1000)
             ||(m_player == BOT && clock() - m_start_time > m_bot_time_limit*1000))
     {
@@ -48,7 +48,7 @@ void Referee::judgeTime()
             emit displayHintSignal(1);
         endGame();
     }
-
+    emit updateSignal();
 }
 
 void Referee::judge()
@@ -66,7 +66,7 @@ void Referee::judge()
             m_board[m_cur_action.x][m_cur_action.y] = -1;
         emit updateSignal();
     }
-    else
+    else if(x >=0 && x < 9 && y >= 0 && y < 9)
     {
         qDebug() << tr("INVALID_POS");
         emit displayHintSignal(2);
@@ -273,10 +273,10 @@ void Referee::setBoardByHistory()
 void Referee::saveGame()
 {
     QJsonObject gameObject;
-    gameObject["GameMode"] = m_game_mode;
     gameObject["FirstPlayer"] = m_first_player;
     gameObject["HumanTimeLimit"] = m_human_time_limit;
     gameObject["BotTimeLimit"] = m_bot_time_limit;
+    gameObject["GameMode"] = m_game_mode;
     gameObject["History"] = m_history;
     QString fileName = QFileDialog::getSaveFileName(nullptr,tr("Save Game"), "",tr("JSON (*.json)"));
     if (fileName.isEmpty())
@@ -297,9 +297,8 @@ void Referee::saveGame()
 
 void Referee::loadGame()
 {
+    resetReferee();
     QString fileName = QFileDialog::getOpenFileName(nullptr,tr("Load Game"), "",tr("JSON (*.json)"));
-
-
     if (fileName.isEmpty())
         return;
     else
@@ -349,6 +348,8 @@ void Referee::loadGame()
         m_bot_time_limit = loadData["BotTimeLimit"].toDouble();
         m_history = loadData["History"].toArray();
         m_time_when_paused = 0;
+        m_start_time = clock();
+
 
         if(m_game_mode == REPLAY)
         {

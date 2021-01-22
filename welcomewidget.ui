@@ -6,81 +6,100 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>460</height>
+    <width>1280</width>
+    <height>920</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>NoGo</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(40, 49, 73);</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>250</y>
-     <width>204</width>
-     <height>90</height>
+     <x>230</x>
+     <y>220</y>
+     <width>804</width>
+     <height>226</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QPushButton" name="NewGamePushButton">
-      <property name="font">
-       <font>
-        <family>Arial Rounded MT Bold</family>
-        <pointsize>20</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-        <stylestrategy>PreferAntialias</stylestrategy>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 20pt &quot;Arial Rounded MT Bold&quot;;
+   <property name="styleSheet">
+    <string notr="true">background-image:url(:/pic/WelcomeLogo.png)</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="NewGamePushButton">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>540</y>
+     <width>271</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 50px &quot;Arial Rounded MT Bold&quot;;
 color: rgb(219, 237, 243);</string>
-      </property>
-      <property name="text">
-       <string>New Game</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="ReplayPushButton">
-      <property name="font">
-       <font>
-        <family>Arial Rounded MT Bold</family>
-        <pointsize>19</pointsize>
-        <weight>50</weight>
-        <italic>false</italic>
-        <bold>false</bold>
-        <stylestrategy>PreferAntialias</stylestrategy>
-       </font>
-      </property>
-      <property name="cursor">
-       <cursorShape>PointingHandCursor</cursorShape>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">font: 19pt &quot;Arial Rounded MT Bold&quot;;
+   </property>
+   <property name="text">
+    <string>New Game</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ReplayPushButton">
+   <property name="geometry">
+    <rect>
+     <x>460</x>
+     <y>640</y>
+     <width>351</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial Rounded MT Bold</family>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+     <stylestrategy>PreferAntialias</stylestrategy>
+    </font>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 50px &quot;Arial Rounded MT Bold&quot;;
 color: rgb(219, 237, 243);</string>
-      </property>
-      <property name="text">
-       <string>Watch Replay</string>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   </property>
+   <property name="text">
+    <string>Watch Replay</string>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <resources/>

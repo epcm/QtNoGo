@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
+        <file>pic/Logo.png</file>
+        <file>pic/WelcomeLogo.png</file>
         <file>pic/QTNoGo.png</file>
-        <file>pic/BlueButton.png</file>
-        <file>pic/RedButton.png</file>
     </qresource>
 </RCC>

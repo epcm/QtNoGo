@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>460</height>
+    <width>1280</width>
+    <height>920</height>
    </rect>
   </property>
   <property name="cursor">
@@ -27,23 +27,26 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#GameWidget
-{	background-image: url(:/pic/QTNoGo.png);
-	background-color: rgb(40, 49, 73);}</string>
+{	
+	background-image: url(:/pic/QTNoGo.png);
+	background-color: rgb(40, 49, 73);
+}</string>
   </property>
   <widget class="QPushButton" name="ReturnPushButton">
    <property name="geometry">
     <rect>
-     <x>480</x>
-     <y>70</y>
-     <width>80</width>
-     <height>41</height>
+     <x>880</x>
+     <y>120</y>
+     <width>360</width>
+     <height>102</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font: 9pt &quot;Arial Rounded MT Bold&quot;;</string>
+    <string notr="true">background-image:url(:/pic/Logo.png);
+</string>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string/>
    </property>
    <property name="flat">
     <bool>true</bool>
@@ -52,10 +55,10 @@
   <widget class="QPushButton" name="HintPushButton">
    <property name="geometry">
     <rect>
-     <x>453</x>
-     <y>200</y>
-     <width>45</width>
-     <height>45</height>
+     <x>910</x>
+     <y>460</y>
+     <width>90</width>
+     <height>90</height>
     </rect>
    </property>
    <property name="cursor">
@@ -64,8 +67,8 @@
    <property name="styleSheet">
     <string notr="true">QPushButton#HintPushButton
 {
-border-radius: 22;
-border-width: 6px; 
+border-radius: 45;
+border-width: 15px; 
 border-style:solid;
 border-color:#dbedf3;
 }</string>
@@ -80,18 +83,19 @@ border-color:#dbedf3;
   <widget class="QPushButton" name="RestartPushButton">
    <property name="geometry">
     <rect>
-     <x>553</x>
-     <y>200</y>
-     <width>45</width>
-     <height>45</height>
+     <x>1110</x>
+     <y>460</y>
+     <width>90</width>
+     <height>90</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-radius: 22;
-border-width: 6px; 
+    <string notr="true">
+border-radius: 45;
+border-width: 15px; 
 border-style:solid;
 border-color:#f73859;
 </string>
@@ -106,20 +110,22 @@ border-color:#f73859;
   <widget class="QPushButton" name="ReactPushButton">
    <property name="geometry">
     <rect>
-     <x>453</x>
-     <y>320</y>
-     <width>45</width>
-     <height>45</height>
+     <x>910</x>
+     <y>680</y>
+     <width>90</width>
+     <height>90</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-radius: 22;
-border-width: 6px; 
+    <string notr="true">
+border-radius: 45;
+border-width: 15px; 
 border-style:solid;
-border-color:#dbedf3;</string>
+border-color:#dbedf3;
+</string>
    </property>
    <property name="text">
     <string/>
@@ -131,20 +137,22 @@ border-color:#dbedf3;</string>
   <widget class="QPushButton" name="PausePushButton">
    <property name="geometry">
     <rect>
-     <x>553</x>
-     <y>320</y>
-     <width>45</width>
-     <height>45</height>
+     <x>1110</x>
+     <y>680</y>
+     <width>90</width>
+     <height>90</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-radius: 22;
-border-width: 6px; 
+    <string notr="true">
+border-radius: 45;
+border-width: 15px; 
 border-style:solid;
-border-color:rgb(247, 56, 89);</string>
+border-color:#f73859;
+</string>
    </property>
    <property name="text">
     <string/>
@@ -156,20 +164,15 @@ border-color:rgb(247, 56, 89);</string>
   <widget class="QLabel" name="AIHintLabel">
    <property name="geometry">
     <rect>
-     <x>448</x>
-     <y>174</y>
-     <width>61</width>
-     <height>16</height>
+     <x>908</x>
+     <y>400</y>
+     <width>101</width>
+     <height>41</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <family>Arial Rounded MT Bold</family>
-     <pointsize>13</pointsize>
-    </font>
-   </property>
    <property name="styleSheet">
-    <string notr="true">color: #7988a8;</string>
+    <string notr="true">color: #7988a8;
+font: 28px 'Arial Rounded MT Bold'</string>
    </property>
    <property name="text">
     <string>AI Hint</string>
@@ -178,20 +181,24 @@ border-color:rgb(247, 56, 89);</string>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>546</x>
-     <y>175</y>
-     <width>61</width>
-     <height>16</height>
+     <x>1105</x>
+     <y>400</y>
+     <width>101</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Arial Rounded MT Bold</family>
-     <pointsize>13</pointsize>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: #7988a8;</string>
+    <string notr="true">color: #7988a8;
+font: 28px 'Arial Rounded MT Bold'</string>
    </property>
    <property name="text">
     <string>Restart</string>
@@ -200,20 +207,24 @@ border-color:rgb(247, 56, 89);</string>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>452</x>
-     <y>290</y>
-     <width>51</width>
-     <height>21</height>
+     <x>917</x>
+     <y>630</y>
+     <width>73</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Arial Rounded MT Bold</family>
-     <pointsize>14</pointsize>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: #7988a8;</string>
+    <string notr="true">color: #7988a8;
+font: 28px 'Arial Rounded MT Bold'</string>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -222,26 +233,63 @@ border-color:rgb(247, 56, 89);</string>
   <widget class="QLabel" name="PauseLabel">
    <property name="geometry">
     <rect>
-     <x>536</x>
-     <y>291</y>
-     <width>81</width>
-     <height>20</height>
+     <x>1091</x>
+     <y>630</y>
+     <width>131</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Arial Rounded MT Bold</family>
-     <pointsize>13</pointsize>
+     <pointsize>-1</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: #7988a8;</string>
+    <string notr="true">color: #7988a8;
+font: 28px 'Arial Rounded MT Bold'</string>
    </property>
    <property name="text">
     <string>Pause</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QProgressBar" name="TimeBar">
+   <property name="geometry">
+    <rect>
+     <x>890</x>
+     <y>290</y>
+     <width>321</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QProgressBar
+{
+background:rgb(64, 75, 105);
+color:white;
+border-radius:8px;
+}
+QProgressBar::chunk
+{
+border-radius:8px;
+background-color:rgb(219, 237, 243);
+}
+</string>
+   </property>
+   <property name="maximum">
+    <number>1000</number>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+   <property name="textVisible">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>

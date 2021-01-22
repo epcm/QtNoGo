@@ -10,6 +10,7 @@
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>
+#include <QMessageBox>
 #include <QVBoxLayout>
 #include <QFileDialog>
 
@@ -18,23 +19,22 @@ GameWidget::GameWidget(QWidget *parent) :
     ui(new Ui::GameWidget)
 {
     ui->setupUi(this);
-    // 设置棋盘大小
-    //setFixedSize(kBoardMargin * 2 + kBlockSize * (kBoardSizeNum-1), kBoardMargin * 2 + kBlockSize * (kBoardSizeNum-1));
-    //    setStyleSheet("background-color:yellow;");
 
-    // 开启鼠标hover功能，这两句一般要设置window的
+    // 开启鼠标实时监测
     setMouseTracking(true);
-    //centralWidget()->setMouseTracking(true);
-    connect(referee, SIGNAL(updateSignal()), this, SLOT(startUpdate()));
     menubar = new QMenuBar(this);
-    menubar->setStyleSheet("font: 9pt 'Arial Rounded MT Bold'");
-    menubar->setGeometry(0,0, this->width(),20);
+    menubar->setStyleSheet("font: 24px 'Arial Rounded MT Bold'");
+    menubar->setGeometry(0,0, this->width(),40);
     QAction* saveAction = menubar->addAction("Save");
     QAction* loadAction = menubar->addAction("Load");
     QAction* aboutAction = menubar->addAction("About");
     menubar->show();
+    // 菜单栏动作
     connect(saveAction, &QAction::triggered, referee, &Referee::saveGame);
     connect(loadAction, &QAction::triggered, referee, &Referee::loadGame);
+    connect(aboutAction, &QAction::triggered, this, &GameWidget::showAboutWidget);
+    // 裁判动作
+    connect(referee, SIGNAL(updateSignal()), this, SLOT(startUpdate()));
     connect(referee, &Referee::displayHintSignal, this, &GameWidget::displayHint);
     connect(referee, &Referee::pauseSignal, this, &GameWidget::on_PausePushButton_clicked);
 }
@@ -44,32 +44,48 @@ GameWidget::~GameWidget()
     delete ui;
 }
 
+void GameWidget::showAboutWidget()
+{
+    QMessageBox AboutBox;
+    AboutBox.setStyleSheet("font: 18px 'Arial Rounded MT Bold'");
+    AboutBox.setText("Copyright © 2020-2021 epcm. All rights reserved.<br><br>"
+                     "Powered by QT 5.15.2<br><br>"
+                     "Github: <a href='https://github.com/epcm/QtNoGo'>https://github.com/epcm/QtNoGo(待作业提交后开源)</a>");
+    AboutBox.exec();
+}
+
 void GameWidget::displayHint(int number)
 {
     switch (number)
     {
     case 0: //红方超时
         h = new HintWidget("RED_TIME_LIMIT_EXCEEDED", this);
-        h->setStyleSheet("background-color:rgba(247,56,89,200)");
+        h->setStyleSheet("background-color:rgba(247,56,89,200);border-radius:20px;"
+                         "font: 24px 'Arial Rounded MT Bold'");
         break;
     case 1: //蓝方超时
         h = new HintWidget("BLUE_TIME_LIMIT_EXCEEDED", this);
-        h->setStyleSheet("background-color:rgba(219,237,243,200)");
+        h->setStyleSheet("background-color:rgba(219,237,243,200);border-radius:20px;"
+                         "font: 24px 'Arial Rounded MT Bold'");
         break;
     case 2: //位置无效
         h = new HintWidget("INVALID_POS", this);
         if(referee->m_color == BLACK) //红方无效
-            h->setStyleSheet("background-color:rgba(247,56,89,200)");
+            h->setStyleSheet("background-color:rgba(247,56,89,200);border-radius:20px;"
+                             "font: 24px 'Arial Rounded MT Bold'");
         else if(referee->m_color == WHITE) //蓝方无效
-            h->setStyleSheet("background-color:rgba(219,237,243,200)");
+            h->setStyleSheet("background-color:rgba(219,237,243,200);border-radius:20px;"
+                             "font: 24px 'Arial Rounded MT Bold'");
         break;
     case 3: //红方胜
         h = new HintWidget("WINNER: RED", this);
-        h->setStyleSheet("background-color:rgba(247,56,89,200)");
+        h->setStyleSheet("background-color:rgba(247,56,89,200);border-radius:20px;"
+                         "font: 24px 'Arial Rounded MT Bold'");
         break;
     case 4: //蓝方胜
         h = new HintWidget("WINNER: LIGHT BLUE", this);
-        h->setStyleSheet("background-color:rgba(219,237,243,200)");
+        h->setStyleSheet("background-color:rgba(219,237,243,200);border-radius:20px;"
+                         "font: 24px 'Arial Rounded MT Bold'");
         break;
     default:
         break;
@@ -79,6 +95,25 @@ void GameWidget::displayHint(int number)
 
 void GameWidget::startUpdate()
 {
+    if(referee->m_game_mode == REPLAY)
+        ui->TimeBar->setValue(0);
+    else
+    {
+        int t;
+        if(referee->m_player == BOT)
+            t = referee->m_bot_time_limit*1000;
+        else if(referee->m_player == HUMAN)
+            t = referee->m_human_time_limit*1000;
+        if(referee->m_paused)
+            ui->TimeBar->setValue(1000-(clock()-referee->m_time_when_paused)*1000.0/t);
+        else
+        {
+            //qDebug() << clock()-referee->m_start_time;
+            //qDebug() << (clock()-referee->m_start_time)*1000/t;
+            ui->TimeBar->setValue(1000-(clock()-referee->m_start_time)*1000.0/t);
+            //qDebug() << ui->TimeBar->value();
+        }
+    }
     repaint();
 }
 
@@ -119,7 +154,7 @@ void GameWidget::paintEvent(QPaintEvent *event)
     // 绘制落子标记(防止鼠标出框越界)
     if (clickPosRow >= 0 && clickPosRow < kBoardSizeNum && clickPosCol >= 0 && clickPosCol < kBoardSizeNum)
     {
-        pen.setWidth(2);
+        pen.setWidth(4);
         pen.setColor(QColor("#404b69"));
         painter.setPen(pen);
         brush.setColor(QColor("#404b69"));
@@ -129,7 +164,7 @@ void GameWidget::paintEvent(QPaintEvent *event)
 
 
     // 绘制棋子
-    pen.setWidth(5);
+    pen.setWidth(15);
     for (int i = 0; i < kBoardSizeNum; i++)
         for (int j = 0; j < kBoardSizeNum; j++)
         {
@@ -203,7 +238,7 @@ void GameWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GameWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(clickPosCol == -1 || clickPosRow == -1)
+    if(clickPosCol < 0 || clickPosCol >= 9 || clickPosRow < 0 || clickPosRow >= 9)
     {
         qDebug() << "OUT_OF_RANGE";
         return;
@@ -223,6 +258,8 @@ void GameWidget::initGame()
     emit showGameSignal(1);
     referee->resetReferee();
     referee->m_start_time = clock();
+    if(referee->m_game_mode == PVP)
+        referee->m_player = HUMAN;
     if(referee->m_player == BOT)
         referee->botOneStep();
     referee->m_timer->start(10);
@@ -276,10 +313,11 @@ void GameWidget::on_PausePushButton_clicked()
     if(referee->m_paused) //解除暂停
     {
         referee->m_start_time = clock()-referee->m_time_when_paused;
+        //qDebug() << "paused" << referee->m_time_when_paused;
         referee->m_timer->start(10);
         referee->m_paused = false;
         referee->m_player = HUMAN;
-        ui->PauseLabel->setText("Continue");
+        ui->PauseLabel->setText("Pause");
     }
     else if(referee->m_player == HUMAN && !referee->m_paused) //只有人一方回合才能暂停
     {
@@ -316,14 +354,14 @@ void GameWidget::on_HintPushButton_clicked()
 {
     AIMCTS ai;
     Action a =  ai.aiAction(referee->m_color, referee->m_board);
-    HintWidget* hintwidget = new HintWidget("hintttt", this);
+    HintWidget* hintwidget = new HintWidget("", this);
     int x, y;
     x = kBoardMargin+kBlockSize*a.x;
     y = kBoardMargin+kBlockSize*a.y;
-    hintwidget->setStyleSheet("border-width: 2px; border-style:solid;border-color:#dbedf3;border-radius:2px");
+    hintwidget->setStyleSheet("border-width: 6px; border-style:solid;border-color:#dbedf3;border-radius:4px");
     //rgb(64, 75, 105)
     //设置控件显示的位置
-    hintwidget->setGeometry(x-kMarkSize/2,y-kMarkSize/2, kMarkSize,kMarkSize);
+    hintwidget->setGeometry(y-kMarkSize/2,x-kMarkSize/2, kMarkSize,kMarkSize);
     hintwidget->show();
 
 }
