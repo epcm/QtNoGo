@@ -181,6 +181,7 @@ void Referee::botOneStep()
     //QTimer::singleShot(1000*m_bot_time_limit, this, SLOT(judge()));
     AIMCTS ai;
     m_cur_action =  ai.aiAction(m_color, m_board);
+    judgeTime();
     emit botFinishedSignal();
 }
 
