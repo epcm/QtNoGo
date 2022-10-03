@@ -1,5 +1,6 @@
 # 基于Qt的不围棋对弈平台
 从右上角下载release版本，可打开exe文件直接玩耍
+算法原理见：https://github.com/epcm/QtNoGo/blob/master/report.pdf
 
 ## 效果展示
 
